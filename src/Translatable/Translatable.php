@@ -281,7 +281,9 @@ trait Translatable
     public function fill(array $attributes)
     {
         foreach ($attributes as $key => $values) {
-            if ($this->isKeyALocale($key)) {
+            // Dirty hack !
+            // https://github.com/Cyrille37/laravel-translatable/issues/1
+            if( $this->isKeyALocale($key) && is_array($values) ) {
                 $this->getTranslationOrNew($key)->fill($values);
                 unset($attributes[$key]);
             } else {
